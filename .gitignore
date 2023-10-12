@@ -33,3 +33,6 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+/csv_files
+10-m-beatport-tracks-spotify-audio-features.zip
