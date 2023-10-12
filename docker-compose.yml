@@ -5,10 +5,8 @@ services:
     image: postgres:16.0
     container_name: spotify_dev
     restart: always
-    environment:
-      POSTGRES_DB: spotify
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin123
+    env_file:
+      - .dev.env
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
