@@ -1,9 +1,9 @@
-import { Column, Entity} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity({name: 'audio_features'})
 export class AudioFeatures{
 
-    @Column('uuid', {name: 'isrc'})
+    @PrimaryGeneratedColumn('uuid', {name: 'isrc'})
     isrc: string
 
     @Column({name: 'acousticness'})
