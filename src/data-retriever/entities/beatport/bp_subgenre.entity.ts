@@ -1,5 +1,4 @@
 import { Column, Entity, ManyToOne, JoinColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-
 import{BeatportGenre} from "./bp_genre.entity" 
 
 @Entity({name: 'bp_subgenre'})
