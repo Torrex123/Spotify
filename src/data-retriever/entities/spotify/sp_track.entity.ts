@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { SpotifyReleaseEntity } from "./sp_release.entity";
 
 @Entity({name: 'sp_track'})
 export class SpotifyTrackEntity {
@@ -19,6 +20,8 @@ export class SpotifyTrackEntity {
     trackNumber: number
 
     @Column({name: 'release_id'})
+    @OneToOne(() => SpotifyReleaseEntity, release => release.releaseId)
+    @JoinColumn()
     releaseId: string
 
     @Column()
