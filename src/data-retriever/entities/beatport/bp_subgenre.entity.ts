@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, Entity, ManyToOne, JoinColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import{BeatportGenre} from "./bp_genre.entity" 
 
 @Entity({name: 'bp_subgenre'})
 export class BeatportSubgenre{
@@ -26,5 +27,12 @@ export class BeatportSubgenre{
 
     @Column({name: 'genre_url'})
     genreURl: string
+
+    @ManyToOne(() => BeatportGenre, genre => genre.genreId, {
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE'
+    })
+    @JoinColumn({ name: 'genre_id' })
+    genre: BeatportGenre;
 
 }

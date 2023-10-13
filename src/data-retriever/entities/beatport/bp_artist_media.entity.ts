@@ -1,5 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
+
+
 @Entity({name: 'bp_artist_media'})
 export class BeatportArtistMedia {
 

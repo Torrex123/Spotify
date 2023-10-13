@@ -38,4 +38,8 @@ export class SpotifyTrackEntity {
         name: 'updated_on'
     })
     updatedOn: Date
+
+    
+
+
 }
