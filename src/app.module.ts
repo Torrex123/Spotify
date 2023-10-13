@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSourceConfig } from './config/data.source';
+import { DataRetrieverModule } from './data-retriever/data-retriever.module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { DataSourceConfig } from './config/data.source';
       envFilePath: `.${process.env.NODE_ENV.trim()}.env`,
       isGlobal: true
     }),
-    TypeOrmModule.forRoot({...DataSourceConfig})
+    TypeOrmModule.forRoot({...DataSourceConfig}),
+    DataRetrieverModule
   ],
   controllers: [AppController],
   providers: [AppService],
