@@ -6,7 +6,7 @@ export class BeatportRelease{
     @PrimaryGeneratedColumn({name: 'release_id'})
     releaseId: number
 
-    @Column({name: 'release_tittle'})
+    @Column({name: 'release_title'})
     releaseTitle: string
 
     @Column({name: 'release_date'})
@@ -15,7 +15,7 @@ export class BeatportRelease{
     @Column({name: 'release_url'})
     releaseUrl: string
 
-    @Column({name: 'release_url'})
+    @Column({name: 'label_id'})
     labelId: number
 
     @UpdateDateColumn({
