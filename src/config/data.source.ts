@@ -16,7 +16,7 @@ export const DataSourceConfig: DataSourceOptions = {
     username: configService.get('POSTGRES_USER'),
     password: configService.get('POSTGRES_PASSWORD'),
     database: configService.get('POSTGRES_DB'),
-    entities: ['dist/data-retriever/entities/**/*.entity{.ts,.js}'],
+    entities: ['dist/src/data-retriever/entities/**/*.entity{.ts,.js}'],
     migrations: [__dirname + '/../db/migrations/*{.ts,.js}'],
     synchronize: true,
     migrationsRun: true,
