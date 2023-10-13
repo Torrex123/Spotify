@@ -1,4 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, Entity, ManyToOne, JoinColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BeatportGenre } from "./bp_genre.entity";
+import { BeatportSubgenre } from "./bp_subgenre.entity";
+import { BeatportRelease } from "./bp_release.entity";
 
 @Entity({name: 'bp_track'})
 export class BeatportTrack{
@@ -32,5 +35,24 @@ export class BeatportTrack{
 
     @Column({name: 'duration'})
     duration: string
+
+    @ManyToOne(() => BeatportGenre, genre => genre.genreId, {
+        onDelete: 'SET NULL',
+    })
+    @JoinColumn({ name: 'genre_id' })
+    genre: BeatportGenre;
+
+    @ManyToOne(() => BeatportSubgenre, subgenre => subgenre.subgenreId, {
+        onDelete: 'SET NULL',
+    })
+    @JoinColumn({ name: 'subgenre_id' })
+    subgenre: BeatportSubgenre;
+
+    @ManyToOne(() => BeatportRelease, release => release.labelId, {
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+    })
+    @JoinColumn({ name: 'release_id' })
+    release: BeatportRelease;
 
 }

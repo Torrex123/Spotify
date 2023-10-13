@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, JoinColumn, UpdateDateColumn } from "typeorm";
+import { BeatportLabel } from "./bp_label.entity";
 
 @Entity({name: 'bp_release'})
 export class BeatportRelease{
@@ -23,4 +24,13 @@ export class BeatportRelease{
         name: 'updated_on'
     })
     updatedOn: Date
+
+    @ManyToOne(() => BeatportLabel, label => label.labelId, {
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
+    })
+    @JoinColumn({ name: 'label_id' })
+    label: BeatportLabel;
+
+    
 }
