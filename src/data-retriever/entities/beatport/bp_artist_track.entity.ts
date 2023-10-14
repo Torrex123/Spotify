@@ -8,7 +8,7 @@ export class BeatportArtistTrack {
     @PrimaryGeneratedColumn({name: 'artist_id'})
     @OneToOne(() => BeatportRelease, release => release.releaseId)
     @JoinColumn()
-    releaseId: number
+    artistId: number
 
     @Column({name: 'track_id'})
     @OneToOne(() => BeatportTrack, track => track.trackId)

@@ -6,7 +6,7 @@ import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeor
 export class BeatportArtistMedia {
 
     @PrimaryGeneratedColumn({name: 'artist_id'})
-    releaseId: number
+    artist_id: number
 
     @Column({name: 'artist_img_id'})
     artistImgId: number

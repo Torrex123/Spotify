@@ -22,7 +22,7 @@ export class BeatportKey {
     isSharp: boolean
 
     @Column({name: 'is_flat'})
-    is_flat: boolean
+    isFlat: boolean
     
     @PrimaryGeneratedColumn({name: 'chord_id'})
     chordID: number

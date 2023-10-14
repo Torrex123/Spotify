@@ -4,10 +4,10 @@ import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeor
 export class BeatportArtist {
 
     @PrimaryGeneratedColumn({name: 'artist_id'})
-    releaseId: number
+    artistId: number
 
     @Column({name: 'artist_name'})
-    artistId: string
+    artistName: string
 
     @Column({name: 'artist_url'})
     artistURL: string
