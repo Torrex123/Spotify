@@ -1,9 +1,7 @@
 import { DataSource } from 'typeorm';
 import { runSeeders, Seeder, SeederFactoryManager } from 'typeorm-extension';
-
-import AudioFeaturesFactory from 'db/factories/audio_features.factory';
-
 import AudioFeaturesSeeder from './audio_features.seeder';
+import AudioFeaturesFactory from '../factories/audio_features.factory';
 
 export default class InitSeeder implements Seeder {
 
