@@ -3,8 +3,11 @@ import { Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 @Entity({name: 'audio_features'})
 export class AudioFeatures{
 
-    @PrimaryGeneratedColumn({name: 'isrc'})
-    isrc: string
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column({ name: 'isrc', type: 'varchar' }) // Cambiar a varchar
+    isrc: string;
 
     @Column({name: 'acousticness', type: 'float'})
     acousticness: number
