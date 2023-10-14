@@ -178,6 +178,8 @@ export class DataRetrieverService {
                     await this.beatportGenreRepository.save(beatportGenre);
                 }
             })
+        
+        return 'success';
     }
 
     async seedBeatportKey(){
@@ -242,10 +244,9 @@ export class DataRetrieverService {
     }
 
     async retrieveBeatportGenre() {
-        const data = await this.beatportGenreRepository.find()
-        return data
+        const data = await this.beatportGenreRepository.find({ select: {} });
+        return data;
     }
-
     async retrieveBeatportArtist() {
         const data = await this.beatportArtistRepository.find()
         return data

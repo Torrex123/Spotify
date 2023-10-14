@@ -8,6 +8,6 @@ export class DataRetrieverController {
 
     @Get()
     async retrieveData() {
-        return this.dataRetrieverService.seedAudioFeatures();
+        return this.dataRetrieverService.retrieveBeatportGenre();
     }
 }
