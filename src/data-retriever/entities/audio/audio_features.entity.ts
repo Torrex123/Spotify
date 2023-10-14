@@ -3,28 +3,28 @@ import { Column, Entity, PrimaryGeneratedColumn} from "typeorm";
 @Entity({name: 'audio_features'})
 export class AudioFeatures{
 
-    @PrimaryGeneratedColumn('uuid', {name: 'isrc'})
+    @PrimaryGeneratedColumn({name: 'isrc'})
     isrc: string
 
-    @Column({name: 'acousticness'})
+    @Column({name: 'acousticness', type: 'float'})
     acousticness: number
 
-    @Column({name: 'danceability'})
+    @Column({name: 'danceability', type: 'float'})
     danceability: number
 
     @Column({name: 'duration_ms'})
     duration_ms: number
 
-    @Column({name: 'energy'})
+    @Column({name: 'energy', type: 'float'})
     energy: number
 
     @Column({name: 'key'})
     key: number
 
-    @Column({name: 'liveness'})
+    @Column({name: 'liveness', type: 'float'})
     liveness: number
 
-    @Column({name: 'loudness'})
+    @Column({name: 'loudness', type: 'float'})
     loudness: number
 
     @Column({name: 'mode'})
