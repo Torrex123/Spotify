@@ -18,3 +18,4 @@ export default class BeatportReleaseSeeder implements Seeder {
             await BeatportReleaseFactory.save();
     }
 }
+

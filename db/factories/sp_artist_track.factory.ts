@@ -1,10 +1,10 @@
 import { setSeederFactory } from 'typeorm-extension';
-import { BeatportArtist } from 'src/data-retriever/entities/beatport/bp_artist.entity'; 
+import { SpotifyArtistTrackEntity } from 'src/data-retriever/entities/spotify/sp_artist_track.entity';
 import fs from 'fs';
 import { parse } from 'csv-parse';
 
 
-export default setSeederFactory(BeatportArtist, async () => {
+export default setSeederFactory(SpotifyArtistTrackEntity, async () => {
 
   const csvData = [];
 
@@ -17,7 +17,8 @@ export default setSeederFactory(BeatportArtist, async () => {
       console.log(row);
     });
 
-  const beatportArtist = new BeatportArtist();
+  const spotifyArtistTrackEntity = new SpotifyArtistTrackEntity();
 
-  return beatportArtist;
+  return spotifyArtistTrackEntity;
 });
+
