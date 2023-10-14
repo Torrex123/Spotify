@@ -11,7 +11,8 @@ export class DataRetrieverService {
     constructor(@InjectRepository(AudioFeatures) private readonly audioRepository: Repository<AudioFeatures>) {}
 
     async retrieveData() {
-        const data = await this.audioRepository.clear()
+        const data = await this.audioRepository.find({ select: {acousticness: true} })
+
         return data
     }
 
@@ -27,28 +28,59 @@ export class DataRetrieverService {
         .on('data', (row) => {
 
             csvData.push(row);
-      })
+        })
         .on('end', () => {
 
             console.log('CSV file successfully processed');
 
-            csvData.forEach((data) => {
+            console.log(csvData.length)
 
-            const audioFeatures = new AudioFeatures()
+            const totalSize = 2343000
+            const batchSize = 500000
 
-            audioFeatures.isrc = data.isrc
-            audioFeatures.acousticness = data.acousticness
-            audioFeatures.danceability = data.danceability
-            audioFeatures.duration_ms = data.duration_ms
-            audioFeatures.energy = data.energy
-            audioFeatures.key = data.key
-            audioFeatures.liveness = data.liveness
-            audioFeatures.loudness = data.loudness
-            audioFeatures.mode = data.mode
+            const totalLoops = Math.ceil(totalSize / batchSize)
 
-            this.audioRepository.save(audioFeatures)
+            let i = 0
+            let contador = 0
+            let j = 0
 
-            });
+            while (i < totalLoops - 1) {
+
+                console.log("loop " + i)
+
+                while (j < batchSize) {
+
+                    const data = csvData.pop()
+
+                    if (data === undefined) break
+
+                    console.log(contador)
+                    contador += 1
+
+                    const audioFeatures = new AudioFeatures()
+
+                    audioFeatures.isrc = data.isrc
+                    audioFeatures.acousticness = data.acousticness
+                    audioFeatures.danceability = data.danceability
+                    audioFeatures.duration_ms = data.duration_ms
+                    audioFeatures.energy = data.energy
+                    audioFeatures.key = data.key
+                    audioFeatures.liveness = data.liveness
+                    audioFeatures.loudness = data.loudness
+                    audioFeatures.mode = data.mode
+
+                    this.audioRepository.save(audioFeatures)
+
+                    j++
+
+                }
+
+                i += 1
+                j = 0
+
+            }
+
+            console.log("terminado")
         });
     }
 }
