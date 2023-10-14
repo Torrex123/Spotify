@@ -20,8 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "export NODE_ENV=development && npm run build && typeorm-ts-node-esm -d ./dist/src/config/data.source.js",
     "m:gen": "npm run typeorm -- migration:generate",
-    "m:run": "export NODE_ENV=development && npm run typeorm migration:run",
-    "seed": "ts-node ./node_modules/typeorm-extension/bin/cli.cjs seed:run -d src/config/data.source.js"
+    "m:run": "export NODE_ENV=development && npm run typeorm migration:run"
   },
   "dependencies": {
     "@nestjs/core": "^10.0.0",
