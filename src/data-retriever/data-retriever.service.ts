@@ -27,7 +27,7 @@ export class DataRetrieverService {
 
             const csvData = await this.readCSVFile('csv_files/audio_features.csv')
 
-            const totalSize = 2343000
+            const totalSize = 2000000
             const batchSize = 500000
 
             const totalLoops = Math.ceil(totalSize / batchSize)
@@ -68,7 +68,7 @@ export class DataRetrieverService {
     async seedspotifyArtist(){
         const results = await this.readCSVFile('csv_files/sp_artist_track.csv')
 
-        const totalSize = results.length
+        const totalSize = 2000000
         const batchSize = 500000
 
         const totalLoops = Math.ceil(totalSize / batchSize)
@@ -106,7 +106,7 @@ export class DataRetrieverService {
     async seedspotifyArtistTrack(){
         const results = await this.readCSVFile('csv_files/sp_artist_track.csv')
 
-        const totalSize = 900000
+        const totalSize = 2000000
         const batchSize = 500000
         
         const totalLoops = Math.ceil(totalSize / batchSize)
@@ -145,7 +145,7 @@ export class DataRetrieverService {
     async seedspotifyTrack(){
         const results = await this.readCSVFile('csv_files/sp_track.csv')
 
-        const totalSize = 900000
+        const totalSize = 2000000
         const batchSize = 500000
         
         const totalLoops = Math.ceil(totalSize / batchSize)
