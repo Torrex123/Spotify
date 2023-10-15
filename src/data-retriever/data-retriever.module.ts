@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { DataRetrieverController } from './data-retriever.controller';
 import { DataRetrieverService } from './data-retriever.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -21,6 +21,6 @@ import { SpotifyTrackEntity } from './entities/spotify/sp_track.entity';
                             ])
   ],
   controllers: [DataRetrieverController],
-  providers: [DataRetrieverService]
+  providers: [DataRetrieverService, Logger]
 })
 export class DataRetrieverModule {}

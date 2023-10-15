@@ -12,6 +12,6 @@ import { DataRetrieverModule } from './data-retriever/data-retriever.module';
     }),
     TypeOrmModule.forRoot({...DataSourceConfig}),
     DataRetrieverModule
-  ],
+  ]
 })
 export class AppModule {}
