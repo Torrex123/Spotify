@@ -23,19 +23,22 @@ export class DataRetrieverService {
                                                         private readonly logger: Logger) {}
 
     async retrieveData() {
-        //const data = await this.audioRepository.find({ select: {acousticness: true} })
-        return this.spotifyReleaseRepository.find({select: {labelName: true}})
-        //return data
+        //return this.audioRepository.find({ select: {acousticness: true} })
+        //return this.spotifyArtistReleaseRepository.find({ select: {artistId: true} })
+        return this.spotifyReleaseRepository.find({ select: {releaseId: true, albumType: true, labelName: true} })
+        //return this.spotifyArtistEntityRepository.find({ select: {artistId: true} })
+        //return this.spotifyArtistTrackEntityRepository.find({ select: {artistId: true} })
+        //return this.spotifyTrackEntityRepository.find({ select: {trackId: true} })
     }
 
     async seederInit() {
 
-        await this.seedAudioFeatures()
-        await this.seedArtistRelease()
-        await this.seedRelease()
-        await this.seedSpotifyArtist()
-        await this.seedSpotifyArtistTrack()
-        await this.seedSpotifyTrack()
+        //await this.seedAudioFeatures()
+        //await this.seedArtistRelease()
+        await this.seedRelease() //PENDIENTE
+        //await this.seedSpotifyArtist() PENDIENTE
+        //await this.seedSpotifyArtistTrack()
+        //await this.seedSpotifyTrack() PENDIENTE
 
         return "Seeded successfully"
     }
@@ -74,8 +77,8 @@ export class DataRetrieverService {
         const csvFilePath = 'csv_files/audio_features.csv'
         const csvData = await this.readCSVFile(csvFilePath)
 
-        const totalSize = 500000
-        const batchSize = 500000
+        const totalSize = 20000
+        const batchSize = 20000
 
         const totalLoops = Math.ceil(totalSize / batchSize)
 
@@ -108,6 +111,8 @@ export class DataRetrieverService {
 
         }
 
+        csvData.length = 0
+
         this.logger.log('Audio features successfully seeded.');
     }
 
@@ -117,8 +122,8 @@ export class DataRetrieverService {
         const csvFilePath = 'csv_files/sp_artist_release.csv'
         const csvData = await this.readCSVFile(csvFilePath)
 
-        const totalSize = 50000
-        const batchSize = 500000
+        const totalSize = 20000
+        const batchSize = 20000
 
         const totalLoops = Math.ceil(totalSize / batchSize)
 
@@ -152,6 +157,8 @@ export class DataRetrieverService {
 
         }
 
+        csvData.length = 0
+
         this.logger.log('Artist releases successfully seeded.');
 
     }
@@ -161,14 +168,14 @@ export class DataRetrieverService {
         const csvFilePath = 'csv_files/sp_release.csv'
         const csvData = await this.readCSVFile(csvFilePath)
 
-        const totalSize = csvData.length
-        const batchSize = 50000
+        const totalSize = 1000
+        const batchSize = 1000
 
         const totalLoops = Math.ceil(totalSize / batchSize)
 
         let i = 0
         let contador = 0
-        let j = 0
+        let j = 0;
 
         this.logger.log('Seeding releases...');
 
@@ -182,8 +189,10 @@ export class DataRetrieverService {
 
                 if (data === undefined) break
 
-
+                console.log(contador)
                 contador += 1
+
+                console.log(data)
 
                 this.spotifyReleaseRepository.save(data)
 
@@ -196,6 +205,8 @@ export class DataRetrieverService {
 
         }
 
+        csvData.length = 0
+
         this.logger.log('Releases successfully seeded.');
     }
 
@@ -203,8 +214,8 @@ export class DataRetrieverService {
 
         const results = await this.readCSVFile('csv_files/sp_artist_track.csv')
 
-        const totalSize = 50000
-        const batchSize = 500000
+        const totalSize = 20000
+        const batchSize = 20000
 
         const totalLoops = Math.ceil(totalSize / batchSize)
 
@@ -238,6 +249,8 @@ export class DataRetrieverService {
 
         }
 
+        results.length = 0
+
         this.logger.log('Artists successfully seeded.');
 
     }
@@ -246,8 +259,8 @@ export class DataRetrieverService {
 
         const results = await this.readCSVFile('csv_files/sp_artist_track.csv')
 
-        const totalSize = 50000
-        const batchSize = 500000
+        const totalSize = 20000
+        const batchSize = 20000
 
         const totalLoops = Math.ceil(totalSize / batchSize)
 
@@ -279,6 +292,8 @@ export class DataRetrieverService {
 
         }
 
+        results.length = 0
+
         this.logger.log('Artists tracks successfully seeded.');
     }
 
@@ -286,8 +301,8 @@ export class DataRetrieverService {
 
         const results = await this.readCSVFile('csv_files/sp_track.csv')
 
-        const totalSize = 50000
-        const batchSize = 500000
+        const totalSize = 20000
+        const batchSize = 20000
 
         const totalLoops = Math.ceil(totalSize / batchSize)
 
@@ -320,6 +335,8 @@ export class DataRetrieverService {
             j = 0
 
         }
+
+        results.length = 0
 
         this.logger.log('Tracks successfully seeded.');
     }
