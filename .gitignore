@@ -36,3 +36,4 @@ lerna-debug.log*
 
 /csv_files
 10-m-beatport-tracks-spotify-audio-features.zip
+db/seeds/seeder
