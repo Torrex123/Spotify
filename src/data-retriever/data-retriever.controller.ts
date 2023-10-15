@@ -8,7 +8,7 @@ export class DataRetrieverController {
 
     @Get()
     async retrieveData() {
-        return this.dataRetrieverService.seedArtistRelease();
+        return this.dataRetrieverService.seederInit();
     }
 
     @Get('data')
