@@ -27,6 +27,9 @@ export class AudioFeatures{
     @Column({name: 'liveness', type: 'float'})
     liveness: number
 
+    @Column({name: 'instrumentalness', type: 'float'})
+    instrumentalness: number
+
     @Column({name: 'loudness', type: 'float'})
     loudness: number
 

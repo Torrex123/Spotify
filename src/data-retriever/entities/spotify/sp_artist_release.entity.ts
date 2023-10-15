@@ -5,15 +5,17 @@ import { SpotifyArtistEntity } from "./sp_artist.entity";
 @Entity({name: 'sp_artist_release'})
 export class SpotifyArtistRelease {
 
-    @PrimaryGeneratedColumn('uuid', {name: 'release_id'})
+    @PrimaryGeneratedColumn()
+    id: number
+
     @OneToOne(() => SpotifyReleaseEntity, release => release.releaseId)
     @JoinColumn()
+    @Column({name: 'release_id', type: 'varchar', length: 255})
     releaseId: string
 
-    @PrimaryGeneratedColumn('uuid', {name: 'artist_id'})
     @OneToOne(() => SpotifyArtistEntity, artist => artist.artistId)
     @JoinColumn()
-    @Column({name: 'artist_id'})
+    @Column({name: 'artist_id', type: 'varchar', length: 255})
     artistId: string
 
     @UpdateDateColumn({
