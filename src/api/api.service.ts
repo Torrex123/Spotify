@@ -41,32 +41,21 @@ export class ApiService {
           .groupBy('sp_release.albumType')
           .getRawMany();
     
-        // Calculate total count
-        const totalCount = albumTypeDistribution.reduce((sum, albumType) => sum + albumType.count, 0);
-    
-        // Calculate percentages and format the result
-        const result = albumTypeDistribution.map(item => ({
-          albumType: item.albumType,
-          percentage: (item.count / totalCount) * 100,
-        }));
-    
-        return result;
+        return albumTypeDistribution;
     }
 
-    async top10ArtistByTrackNumber() {
-        const top10Artists = await this.spotifyReleaseEntity
+    async artistByTrackNumber() {
+        const artistByTrackNumber = await this.spotifyReleaseEntity
             .createQueryBuilder('sp_release')
             .select('sp_artist.artist_name as artistName, SUM(sp_release.total_tracks) as trackCount')
             .innerJoin('sp_release.artist_releases', 'artist_release')
             .innerJoin('artist_release.artist', 'sp_artist')
             .groupBy('sp_artist.artist_name')
             .orderBy('trackCount', 'DESC')
-            .limit(10)
             .getRawMany();
     
-        return top10Artists;
+        return artistByTrackNumber;
     }
-
 
     async getMostPopularRelease() {
         const popularRelease = await this.spotifyReleaseEntity.findOne({

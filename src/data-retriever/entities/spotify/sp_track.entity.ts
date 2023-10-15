@@ -10,7 +10,7 @@ export class SpotifyTrackEntity {
     @Column({name: 'track_title'})
     trackTitle: string
 
-    @Column({name: 'duration_ms'})
+    @Column({name: 'duration_ms', type: 'bigint'})
     durationMs: number
 
     @Column({name: 'isrcs'})
@@ -39,7 +39,7 @@ export class SpotifyTrackEntity {
     })
     updatedOn: Date
 
-    
+
 
 
 }
