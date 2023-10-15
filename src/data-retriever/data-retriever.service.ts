@@ -24,7 +24,7 @@ export class DataRetrieverService {
 
     async retrieveData() {
         //const data = await this.audioRepository.find({ select: {acousticness: true} })
-        return this.spotifyReleaseRepository.find({select: {labelName: true}})
+        return this.spotifyArtistTrackEntityRepository.find({select: {artistId: true}})
         //return data
     }
 

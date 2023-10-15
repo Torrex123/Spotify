@@ -12,10 +12,10 @@ export class SpotifyReleaseEntity {
     @Column({name: 'release_date'})
     releaseDate: Date
 
-    @Column()
+    @Column({name: 'popularity'})
     upc: number
 
-    @Column()
+    @Column({name: 'popularity'})
     popularity: number
 
     @Column({name: 'total_tracks'})

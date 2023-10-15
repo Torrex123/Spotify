@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSourceConfig } from './config/data.source';
 import { DataRetrieverModule } from './data-retriever/data-retriever.module';
+import { ApiModule } from './api/api.module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { DataRetrieverModule } from './data-retriever/data-retriever.module';
       isGlobal: true
     }),
     TypeOrmModule.forRoot({...DataSourceConfig}),
-    DataRetrieverModule
+    DataRetrieverModule,
+    ApiModule
   ]
 })
 export class AppModule {}

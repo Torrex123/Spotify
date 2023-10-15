@@ -13,7 +13,7 @@ export class SpotifyTrackEntity {
     @Column({name: 'duration_ms'})
     durationMs: number
 
-    @Column()
+    @Column({name: 'isrcs'})
     isrc: string
 
     @Column({name: 'track_number'})
@@ -24,7 +24,7 @@ export class SpotifyTrackEntity {
     @JoinColumn()
     releaseId: string
 
-    @Column()
+    @Column({name: 'explicit'})
     explicit: boolean
 
     @Column({name: 'disc_number'})
