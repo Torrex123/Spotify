@@ -25,7 +25,7 @@ export class DataRetrieverService {
     async retrieveData() {
         //return this.audioRepository.find({ select: {acousticness: true} })
         //return this.spotifyArtistReleaseRepository.find({ select: {artistId: true} })
-        return this.spotifyReleaseRepository.find({ select: {releaseId: true, albumType: true, labelName: true} })
+        //return this.spotifyReleaseRepository.find({ select: {releaseId: true, albumType: true, labelName: true} })
         //return this.spotifyArtistEntityRepository.find({ select: {artistId: true} })
         //return this.spotifyArtistTrackEntityRepository.find({ select: {artistId: true} })
         //return this.spotifyTrackEntityRepository.find({ select: {trackId: true} })
@@ -35,8 +35,8 @@ export class DataRetrieverService {
 
         //await this.seedAudioFeatures()
         //await this.seedArtistRelease()
-        await this.seedRelease() //PENDIENTE
-        //await this.seedSpotifyArtist() PENDIENTE
+       // await this.seedRelease() //PENDIENTE
+        //await this.seedSpotifyArtist()
         //await this.seedSpotifyArtistTrack()
         //await this.seedSpotifyTrack() PENDIENTE
 
