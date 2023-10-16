@@ -3,10 +3,13 @@ import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeor
 @Entity({name: 'sp_artist'})
 export class SpotifyArtistEntity {
 
-    @PrimaryGeneratedColumn('uuid', {name: 'artist_id'})
+    @PrimaryGeneratedColumn()
+    id: number
+
+    @Column({name: 'artist_id', type: 'varchar', length: 255})
     artistId: string
 
-    @Column({name: 'artist_name'})
+    @Column({name: 'artist_name', type: 'varchar', length: 255})
     artistName: string
 
     @UpdateDateColumn({

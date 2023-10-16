@@ -7,37 +7,53 @@ export class ApiController {
 
     constructor(private readonly apiService: ApiService) {}
 
-    @Post('\top10ArtistByTrackNumber')
-    async top10ArtistByTrackNumber(@Res() res) {
-        res.status(200).json({
-            "position": 1,
-            "tittle": "Artist by Track Number",
-            "type": "Bar",
-            "dataset": await this.apiService.artistByTrackNumber
-        });
-    }
-
     @Post('\scatterDanceabilityLoudness')
     async scatterDanceabilityLoudness(@Res() res) {
         res.status(200).json({
-            "position": 2,
-            "tittle": "Loudness vs. Danceability",
+            "position": 1,
+            "title": "Loudness vs. Danceability",
             "type": "Scatter",
-            "dataset": {
-                "data": await this.apiService.scatterDanceabilityLoudness(),
-                "description": "point" }
+            "datasets":[await this.apiService.scatterDanceabilityLoudness()],
+            "xlabel": "Danceability",
+            "ylabel": "Loudness"
         });
     }
 
     @Post('\albumTypeDistribution')
     async albumTypeDistribution(@Res() res) {
         res.status(200).json({
-            "position": 3,
-            "tittle": "Album Type Distribution",
+            "position": 2,
+            "title": "Album Type Distribution",
             "type": "Pie",
-            "data": await this.apiService.getAlbumTypeDistribution()
+            "data": await this.apiService.getAlbumTypeDistribution(),
+            "xlabel": "album type",
+            "ylabel": "count"
         });
     }
 
+    @Post('\artistByTrackNumber')
+    async artistByTrackNumber(@Res() res) {
+        res.status(200).json({
+            "position": 3,
+            "title": "Artist by Track Number",
+            "type": "Bar",
+            "dataset": await this.apiService.totalTracksByArtistName(),
+            "xlabel": "Artist",
+            "ylabel": "total tracks"
+        });
+    }
 
+    @Post('\a')
+    async tracksThroughTime(@Res() res) {
+        res.status(200).json({
+            "position": 4,
+            "title": "Number of Tracks Over Time",
+            "type": "Line",
+            "dataset": await this.apiService.numberOfTracksOverTime(),
+            "xlabel": "Year",
+            "ylabel": "Count"
+        });
+    }
+
+   
 }

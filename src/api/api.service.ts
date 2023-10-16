@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { DataRetrieverService } from 'src/data-retriever/data-retriever.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, LessThanOrEqual, MoreThanOrEqual } from 'typeorm';
@@ -13,60 +13,82 @@ import { SpotifyTrackEntity } from '../data-retriever/entities/spotify/sp_track.
 @Injectable()
 export class ApiService {
 
-    constructor(@InjectRepository(SpotifyArtistRelease) private readonly spotifyArtistRelease: Repository<SpotifyArtistRelease>,
+    constructor(
     @InjectRepository(AudioFeatures) private readonly audioFeatures: Repository<AudioFeatures>,
     @InjectRepository(SpotifyReleaseEntity) private readonly spotifyReleaseEntity: Repository<SpotifyReleaseEntity>,
-    @InjectRepository(SpotifyTrackEntity) private readonly spotifyTrackEntity: Repository<SpotifyTrackEntity>) {}
+    @InjectRepository(SpotifyTrackEntity) private readonly spotifyTrackEntity: Repository<SpotifyTrackEntity>
+    ) {}
 
 
     async scatterDanceabilityLoudness() {
-
         const danceabilityLoudness = await this.audioFeatures.find({
             select: ['danceability', 'loudness'],
         });
-
+    
         const transformedData = danceabilityLoudness.map(item => ({
             x: item.danceability,
             y: item.loudness,
         }));
     
-        return transformedData;
-    
+        return {
+            data: transformedData,
+            description: "Correlation between loudness and danceability",
+        };
     }
-
+    
     async getAlbumTypeDistribution() {
         const albumTypeDistribution = await this.spotifyReleaseEntity
-          .createQueryBuilder('sp_release')
-          .select('sp_release.albumType as albumType, COUNT(sp_release.albumType) as count')
-          .groupBy('sp_release.albumType')
-          .getRawMany();
-    
-        return albumTypeDistribution;
-    }
-
-    async artistByTrackNumber() {
-        const artistByTrackNumber = await this.spotifyReleaseEntity
             .createQueryBuilder('sp_release')
-            .select('sp_artist.artist_name as artistName, SUM(sp_release.total_tracks) as trackCount')
-            .innerJoin('sp_release.artist_releases', 'artist_release')
-            .innerJoin('artist_release.artist', 'sp_artist')
-            .groupBy('sp_artist.artist_name')
-            .orderBy('trackCount', 'DESC')
+            .select('sp_release.album_type, COUNT(sp_release.album_type) as count')
+            .groupBy('sp_release.album_type')
             .getRawMany();
     
-        return artistByTrackNumber;
+        const xList = albumTypeDistribution.map(item => item.album_type);
+        const yList = albumTypeDistribution.map(item => item.count);
+    
+        return {
+            x: xList,
+            y: {y: yList, "description": "percentage of album type"}
+        };
+    }
+    
+    async totalTracksByArtistName() {
+        const totalTracksByArtist = await this.spotifyReleaseEntity
+            .createQueryBuilder('sp_release')
+            .select('sp_artist.artist_name, SUM(sp_release.total_tracks) as total')
+            .innerJoin('sp_artist_release', 'artist_release', 'artist_release.release_id = sp_release.release_id')
+            .innerJoin('sp_artist', 'sp_artist', 'sp_artist.artist_id = artist_release.artist_id') // Join the sp_artist table
+            .groupBy('sp_artist.artist_name')
+            .getRawMany();
+        
+        const xList = totalTracksByArtist.map(item => item.artist_name);
+        const yList = totalTracksByArtist.map(item => item.total);
+    
+        return {
+            x: xList,
+            y: {y: yList, "description": "total tracks of the artist"}
+        };
     }
 
-    async getMostPopularRelease() {
-        const popularRelease = await this.spotifyReleaseEntity.findOne({
-            where: {
-                popularity: MoreThanOrEqual(50) && LessThanOrEqual(87),
-            },
-            order: {
-                popularity: 'DESC',
-            },
-        });
-        return popularRelease;
+    async numberOfTracksOverTime() {
+
+        const tracksOverTime = await this.spotifyTrackEntity
+        .createQueryBuilder('sp_track')
+        .select('sp_track.updated_on, COUNT(sp_track.track_id) as count')
+        .groupBy('sp_track.updated_on')
+        .getRawMany();
+
+        const xList = tracksOverTime.map(item => item.updated_on);
+        const yList = tracksOverTime.map(item => item.count);
+    
+        return {
+            x: xList,
+            y: {y: yList, "description": "tracks over time"}
+        };
     }
+
+    
+
+
 
 }
