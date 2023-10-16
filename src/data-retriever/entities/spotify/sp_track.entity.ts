@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { SpotifyReleaseEntity } from "./sp_release.entity";
+import { AudioFeatures } from "../audio/audio_features.entity";
 
 @Entity({name: 'sp_track'})
 export class SpotifyTrackEntity {
