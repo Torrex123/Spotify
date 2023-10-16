@@ -101,7 +101,7 @@ export class ApiService {
 
         return {
             x: xList,
-            y: { y: yList, description: "percentage of album type" }
+            y: [ {y: yList}, {description: "percentage of album type"} ]
         };
     }
 
@@ -142,7 +142,7 @@ export class ApiService {
 
         return {
             x: xList,
-            y: {y: yList, "description": "total tracks of the artist"}
+            y: [{y: yList}, {"description": "total tracks of the artist"}]
         };
     }
 
@@ -182,7 +182,7 @@ export class ApiService {
     
         return {
             x: xList,
-            y: { y: yList, description: "tracks over time" }
+            y: [ {y: yList}, {description: "tracks over time" }]
         };
     }
     

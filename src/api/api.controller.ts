@@ -34,7 +34,7 @@ export class ApiController {
             "position": 2,
             "title": "Album Type Distribution",
             "type": "Pie",
-            "data": await this.apiService.getAlbumTypeDistribution(artist, top, date),
+            "datasets": await this.apiService.getAlbumTypeDistribution(artist, top, date),
             "xlabel": "album type",
             "ylabel": "count"
         });
