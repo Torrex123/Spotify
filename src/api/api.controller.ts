@@ -24,16 +24,17 @@ export class ApiController {
     }
 
     @Get('albumTypeDistribution')
-    async albumTypeDistribution(@Res() res,
-                                @Query('artist') artist?: string,
-                                @Query('top') top?: number,
-                                @Query('date') date?: string
-                                ) {
+    async albumTypeDistribution(
+        @Query('artist') artist: string,
+        @Query ('top') top: number,
+        @Query ('date') date: string,
+        @Res() res,
+    ) {
         res.status(200).json({
             "position": 2,
             "title": "Album Type Distribution",
             "type": "Pie",
-            "data": await this.apiService.getAlbumTypeDistribution(),
+            "data": await this.apiService.getAlbumTypeDistribution(artist, top, date),
             "xlabel": "album type",
             "ylabel": "count"
         });
@@ -56,12 +57,16 @@ export class ApiController {
     }
 
     @Get('tracksThroughTime')
-    async tracksThroughTime(@Res() res) {
+    async tracksThroughTime(
+        @Query('artist') artist: string,
+        @Query ('top') top: number,
+        @Query ('date') date: string,
+        @Res() res) {
         res.status(200).json({
             "position": 4,
             "title": "Number of Tracks Over Time",
             "type": "Line",
-            "dataset": await this.apiService.numberOfTracksOverTime(),
+            "dataset": await this.apiService.numberOfTracksOverTime(artist, top, date),
             "xlabel": "Year",
             "ylabel": "Count"
         });
@@ -81,5 +86,11 @@ export class ApiController {
             "xlabel": "Instrumentalness",
             "ylabel": "Energy"
         });
+    }
+
+    @Get('artists')
+    async retrieveArtist() {
+
+        return await this.apiService.ArtistsByTrackNumber()
     }
 }
