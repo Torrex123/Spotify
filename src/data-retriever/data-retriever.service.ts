@@ -38,7 +38,7 @@ export class DataRetrieverService {
        // await this.seedRelease() //PENDIENTE
         //await this.seedSpotifyArtist()
         //await this.seedSpotifyArtistTrack()
-        //await this.seedSpotifyTrack() PENDIENTE
+        await this.seedSpotifyTrack()
 
         return "Seeded successfully"
     }
@@ -322,10 +322,10 @@ export class DataRetrieverService {
 
                 if (data === undefined) break
 
-
+                console.log(data)
                 contador += 1
 
-                this.spotifyTrackEntityRepository.save(data)
+                //this.spotifyTrackEntityRepository.save(data)
 
                 j++
 

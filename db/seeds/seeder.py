@@ -223,12 +223,10 @@ if (not check_data_in_table('sp_track', conn)):
     contador = 0
 
     # Lee los datos desde el archivo CSV
-    with open('csv_files/sp_release.csv', 'r') as f:
+    with open('csv_files/sp_track.csv', 'r') as f:
         reader = csv.reader(f)
         next(reader)  # Omitir la fila de encabezado
         for row in reader:
-
-            if contador == MAX_DATA_ROWS: break
             # Desempaqueta los valores de la fila
             track_id = row[0]
             track_title = row[1]
@@ -246,8 +244,6 @@ if (not check_data_in_table('sp_track', conn)):
             data = (track_id, track_title, duration_ms, isrc, track_number, release_id, explicit, disc_number, preview_url, updated_on)
             cur.execute(sql, data)
 
-            contador += 1
-
     # Confirma la transacción
     conn.commit()
 
@@ -257,4 +253,3 @@ print('Seeding completed')
 
 cur.close()
 conn.close()
-

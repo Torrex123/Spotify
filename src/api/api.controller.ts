@@ -1,4 +1,4 @@
-import { Controller, Post, Res, Get, Query, Param} from '@nestjs/common';
+import { Controller, Get, Query, Res } from '@nestjs/common';
 import { ApiService } from './api.service';
 
 
@@ -8,12 +8,16 @@ export class ApiController {
     constructor(private readonly apiService: ApiService) {}
 
     @Get('scatterDanceabilityLoudness')
-    async scatterDanceabilityLoudness(@Res() res) {
+    async scatterDanceabilityLoudness(@Res() res,
+                                      @Query('artist') artist?: string,
+                                      @Query('top') top?: number,
+                                      @Query('date') date?: string
+                                      ) {
         res.status(200).json({
             "position": 1,
             "title": "Loudness vs. Danceability",
             "type": "Scatter",
-            "datasets":[await this.apiService.top10ArtistsByTrackNumber()],
+            "datasets":[await this.apiService.scatterDanceabilityLoudness(artist, top, date)],
             "xlabel": "Danceability",
             "ylabel": "Loudness"
         });
@@ -37,12 +41,16 @@ export class ApiController {
     }
 
     @Get('artistByTrackNumber')
-    async artistByTrackNumber(@Res() res) {
+    async artistByTrackNumber(@Res() res,
+                              @Query('artist') artist?: string,
+                              @Query('top') top?: number,
+                              @Query('date') date?: string
+                              ) {
         res.status(200).json({
             "position": 3,
             "title": "Artist by Track Number",
             "type": "Bar",
-            "dataset": await this.apiService.totalTracksByArtistName(),
+            "dataset": await this.apiService.totalTracksByArtistName(artist, top, date),
             "xlabel": "Artist",
             "ylabel": "total tracks"
         });
@@ -62,5 +70,27 @@ export class ApiController {
             "xlabel": "Year",
             "ylabel": "Count"
         });
-    }  
+    }
+
+    @Get('scatterInstrumentalnessEnergy')
+    async scatterInstrumentalnessEnergy(@Res() res,
+                                      @Query('artist') artist?: string,
+                                      @Query('top') top?: number,
+                                      @Query('date') date?: string
+                                      ) {
+        res.status(200).json({
+            "position": 5,
+            "title": "Instrumentalness vs Energy",
+            "type": "Scatter",
+            "datasets":[await this.apiService.scatterInstrumentalnessEnergy(artist, top, date)],
+            "xlabel": "Instrumentalness",
+            "ylabel": "Energy"
+        });
+    }
+
+    @Get('artists')
+    async retrieveArtist() {
+
+        return await this.apiService.ArtistsByTrackNumber()
+    }
 }
