@@ -27,8 +27,8 @@ export class SpotifyTrackEntity {
     @JoinColumn()
     releaseId: string
 
-    @Column()
-    explicit: boolean
+    @Column({type: 'varchar', length: 255})
+    explicit: string
 
     @Column({name: 'disc_number'})
     discNumber: number
