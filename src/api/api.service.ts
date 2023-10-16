@@ -42,14 +42,15 @@ export class ApiService {
         }
 
         if (date) {
-
-            const year = parseInt(date);
-
-            if (artist) query.andWhere('EXTRACT(YEAR FROM TO_DATE(release.release_date, \'YYYY-MM-DD\')) = :year', { year });
-            else query.where('EXTRACT(YEAR FROM TO_DATE(release.release_date, \'YYYY-MM-DD\')) = :year', { year });
-
-
+            const [startYear, endYear] = date.split('-');
+    
+            if (artist) {
+                query.andWhere("EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, 'YYYY-MM-DD')) BETWEEN :startYear AND :endYear", { startYear, endYear });
+            } else {
+                query.andWhere("EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, 'YYYY-MM-DD')) BETWEEN :startYear AND :endYear", { startYear, endYear });
+            }
         }
+        
         const danceabilityLoudness = await query.getRawMany();
 
         const transformedData = danceabilityLoudness.map(item => ({
@@ -78,11 +79,13 @@ export class ApiService {
         }
 
         if (date) {
-            const year = parseInt(date);
-
-            if (artist) query.andWhere('EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, \'YYYY-MM-DD\')) = :year', { year });
-            else query.where('EXTRACT(YEAR FROM TO_DATE(release.release_date, \'YYYY-MM-DD\')) = :year', { year });
-
+            const [startYear, endYear] = date.split('-');
+    
+            if (artist) {
+                query.andWhere("EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, 'YYYY-MM-DD')) BETWEEN :startYear AND :endYear", { startYear, endYear });
+            } else {
+                query.andWhere("EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, 'YYYY-MM-DD')) BETWEEN :startYear AND :endYear", { startYear, endYear });
+            }
         }
 
         if (top) {
@@ -123,11 +126,13 @@ export class ApiService {
         }
 
         if (date) {
-
-            const year = parseInt(date);
-
-            if (artist) query.andWhere('EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, \'YYYY-MM-DD\')) = :year', { year });
-            else query.where('EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, \'YYYY-MM-DD\')) = :year', { year });
+            const [startYear, endYear] = date.split('-');
+    
+            if (artist) {
+                query.andWhere("EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, 'YYYY-MM-DD')) BETWEEN :startYear AND :endYear", { startYear, endYear });
+            } else {
+                query.andWhere("EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, 'YYYY-MM-DD')) BETWEEN :startYear AND :endYear", { startYear, endYear });
+            }
         }
 
         const totalTracksByArtist = await query.getRawMany();
@@ -142,43 +147,45 @@ export class ApiService {
     }
 
     async numberOfTracksOverTime(artist?: string, top?: number, date?: string) {
-
         console.log(artist, top, date);
-
+    
         let query = this.spotifyTrackEntity
             .createQueryBuilder('sp_track')
-            .select('sp_track.updated_on, COUNT(sp_track.track_id) as count')
+            .select('sp_release.release_date, COUNT(sp_track.track_id) as count')
             .innerJoin('sp_release', 'sp_release', 'sp_release.release_id = sp_track.release_id')
-            .groupBy('sp_track.updated_on');
-
+            .groupBy('sp_release.release_date');
+    
         if (artist) {
             query = query.innerJoin('sp_artist_track', 'artist', 'artist.track_id = sp_track.track_id')
                          .innerJoin('sp_artist', 'sp_artist', 'sp_artist.artist_id = artist.artist_id')
                          .where('sp_artist.artist_name = :artist', { artist });
         }
-
-
+    
         if (date) {
-            const year = parseInt(date);
-
-            if (artist) query.andWhere('EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, \'YYYY-MM-DD\')) = :year', { year });
-            else query.where('EXTRACT(YEAR FROM TO_DATE(release.release_date, \'YYYY-MM-DD\')) = :year', { year });
+            const [startYear, endYear] = date.split('-');
+    
+            if (artist) {
+                query.andWhere("EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, 'YYYY-MM-DD')) BETWEEN :startYear AND :endYear", { startYear, endYear });
+            } else {
+                query.andWhere("EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, 'YYYY-MM-DD')) BETWEEN :startYear AND :endYear", { startYear, endYear });
+            }
         }
-
+    
         if (top) {
             query = query.limit(top);
         }
-
+    
         const tracksOverTime = await query.getRawMany();
-
-        const xList = tracksOverTime.map(item => item.updated_on);
+    
+        const xList = tracksOverTime.map(item => item.release_date);
         const yList = tracksOverTime.map(item => item.count);
-
+    
         return {
             x: xList,
             y: { y: yList, description: "tracks over time" }
         };
     }
+    
 
     async scatterInstrumentalnessEnergy(artist?: string, top?: number, date?: string) {
 
@@ -201,13 +208,13 @@ export class ApiService {
         }
 
         if (date) {
-
-            const year = parseInt(date);
-
-            if (artist) query.andWhere('EXTRACT(YEAR FROM TO_DATE(release.release_date, \'YYYY-MM-DD\')) = :year', { year });
-            else query.where('EXTRACT(YEAR FROM TO_DATE(release.release_date, \'YYYY-MM-DD\')) = :year', { year });
-
-
+            const [startYear, endYear] = date.split('-');
+    
+            if (artist) {
+                query.andWhere("EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, 'YYYY-MM-DD')) BETWEEN :startYear AND :endYear", { startYear, endYear });
+            } else {
+                query.andWhere("EXTRACT(YEAR FROM TO_DATE(sp_release.release_date, 'YYYY-MM-DD')) BETWEEN :startYear AND :endYear", { startYear, endYear });
+            }
         }
         const instrumentalnessEnergy = await query.getRawMany();
 
@@ -241,6 +248,7 @@ export class ApiService {
             x: xList,
             y: {y: yList, "description": "top 100 artists by track number"}
         };
+
     }
 
 }
