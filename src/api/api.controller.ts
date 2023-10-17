@@ -16,7 +16,7 @@ export class ApiController {
         res.status(200).json({
             "position": 1,
             "title": "Loudness vs. Danceability",
-            "type": "Scatter",
+            "type": "scatter",
             "datasets":[await this.apiService.scatterDanceabilityLoudness(artist, top, date)],
             "xlabel": "Danceability",
             "ylabel": "Loudness"
@@ -33,8 +33,8 @@ export class ApiController {
         res.status(200).json({
             "position": 2,
             "title": "Album Type Distribution",
-            "type": "Pie",
-            "data": await this.apiService.getAlbumTypeDistribution(artist, top, date),
+            "type": "pie",
+            "datasets": await this.apiService.getAlbumTypeDistribution(artist, top, date),
             "xlabel": "album type",
             "ylabel": "count"
         });
@@ -49,8 +49,8 @@ export class ApiController {
         res.status(200).json({
             "position": 3,
             "title": "Artist by Track Number",
-            "type": "Bar",
-            "dataset": await this.apiService.totalTracksByArtistName(artist, top, date),
+            "type": "bar",
+            "datasets": await this.apiService.totalTracksByArtistName(artist, top, date),
             "xlabel": "Artist",
             "ylabel": "total tracks"
         });
@@ -65,8 +65,8 @@ export class ApiController {
         res.status(200).json({
             "position": 4,
             "title": "Number of Tracks Over Time",
-            "type": "Line",
-            "dataset": await this.apiService.numberOfTracksOverTime(artist, top, date),
+            "type": "line",
+            "datasets": await this.apiService.numberOfTracksOverTime(artist, top, date),
             "xlabel": "Year",
             "ylabel": "Count"
         });
@@ -81,7 +81,7 @@ export class ApiController {
         res.status(200).json({
             "position": 5,
             "title": "Instrumentalness vs Energy",
-            "type": "Scatter",
+            "type": "scatter",
             "datasets":[await this.apiService.scatterInstrumentalnessEnergy(artist, top, date)],
             "xlabel": "Instrumentalness",
             "ylabel": "Energy"

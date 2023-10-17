@@ -5,8 +5,8 @@ MAX_DATA_ROWS = 100000
 
 # Conecta a la base de datos PostgreSQL
 conn = psycopg2.connect(
-    host="localhost",
-    port=5433,
+    host="172.29.0.2",
+    port=5432,
     database="spotify",
     user="admin",
     password="admin123"

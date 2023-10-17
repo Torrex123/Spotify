@@ -26,9 +26,9 @@ export class DataRetrieverService {
         //return this.audioRepository.find({ select: {acousticness: true} })
         //return this.spotifyArtistReleaseRepository.find({ select: {artistId: true} })
         //return this.spotifyReleaseRepository.find({ select: {releaseId: true, albumType: true, labelName: true} })
-        //return this.spotifyArtistEntityRepository.find({ select: {artistId: true} })
+        return this.spotifyArtistEntityRepository.find({ select: {artistId: true, artistName: true, id: true, updatedOn: true} })
         //return this.spotifyArtistTrackEntityRepository.find({ select: {artistId: true} })
-        //return this.spotifyTrackEntityRepository.find({ select: {trackId: true} })
+        //return this.spotifyTrackEntityRepository.find({ select: {trackId: true, discNumber: true, durationMs: true, explicit: true, id: true, isrc: true, previewUrl: true} })
     }
 
     async seederInit() {
